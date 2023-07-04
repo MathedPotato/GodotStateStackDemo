@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://cfepv6bvth2u1"]
+
+[ext_resource type="PackedScene" uid="uid://b7h0uwb45uy5j" path="res://char.tscn" id="1_m0e8x"]
+[ext_resource type="Script" path="res://MainGameState.gd" id="1_uwsey"]
+[ext_resource type="Script" path="res://PauseScreen.gd" id="3_rww3b"]
+[ext_resource type="PackedScene" uid="uid://suelsskwbl2n" path="res://enemy.tscn" id="4_tki68"]
+[ext_resource type="PackedScene" uid="uid://dfrkayinrsc8o" path="res://physics_ball.tscn" id="5_d1lin"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7v56e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xoici"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4o6p2"]
+
+[sub_resource type="Sky" id="Sky_y4apt"]
+sky_material = SubResource("ProceduralSkyMaterial_4o6p2")
+
+[sub_resource type="Environment" id="Environment_7od0v"]
+background_mode = 2
+sky = SubResource("Sky_y4apt")
+glow_mix = 1.0
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_uwsey")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.582123, -0.6468, 0.49273, 0, 0.605988, 0.795474, -0.813101, 0.463063, -0.35276, 0, 0, 0)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)
+mesh = SubResource("PlaneMesh_7v56e")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -1, 0)
+shape = SubResource("BoxShape3D_xoici")
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("1_m0e8x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52683, 1.2969, 0.444064)
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/CamFocus/SpringArm" index="0"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7od0v")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+script = ExtResource("3_rww3b")
+pausedColour = Color(0, 0, 0, 0.529412)
+unpausedColour = Color(0, 0, 0, 0)
+
+[node name="Enemy" parent="." instance=ExtResource("4_tki68")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3453, 1.38952, -12.8101)
+
+[node name="PhysicsBall" parent="." instance=ExtResource("5_d1lin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -4)
+
+[node name="PhysicsBall2" parent="." instance=ExtResource("5_d1lin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.0268, 0, -5.18636)
+
+[node name="PhysicsBall3" parent="." instance=ExtResource("5_d1lin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.78217, 4.76837e-07, -0.416233)
+
+[node name="PhysicsBall4" parent="." instance=ExtResource("5_d1lin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6501, 0, 2.85834)
+
+[node name="PhysicsBall5" parent="." instance=ExtResource("5_d1lin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5796, -4.76837e-07, -6.28573)
+
+[node name="PhysicsBall6" parent="." instance=ExtResource("5_d1lin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.81266, 4.76837e-07, -1.51968)
+
+[editable path="CharacterBody3D"]

@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7h0uwb45uy5j"]
+
+[ext_resource type="Script" path="res://char.gd" id="1_72d4a"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dlis7"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_o4a3q"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vabor"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 2
+script = ExtResource("1_72d4a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_dlis7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_o4a3q")
+
+[node name="CamFocus" type="Node3D" parent="."]
+
+[node name="SpringArm" type="SpringArm3D" parent="CamFocus"]
+transform = Transform3D(1, 0, 0, 0, 0.91496, 0.403545, 0, -0.403545, 0.91496, 0, 0, 0)
+spring_length = 5.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CamFocus/SpringArm"]
+visible = false
+mesh = SubResource("BoxMesh_vabor")
